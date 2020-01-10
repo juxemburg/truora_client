@@ -20,6 +20,14 @@ export class HttpClient {
       : { ...defaultHeaders };
   }
 
+  public Get<U>(subURI: string, successStatuses = [200]): Observable<U> {
+    return from(
+      axios.get<any, AxiosResponse<U>>(`${API}/${subURI}`, {
+        headers: HttpClient.headers,
+      })
+    ).pipe(map(r => this.parseResponse(r, successStatuses)));
+  }
+
   public Post<T, U>(
     subURI: string,
     model: T,
