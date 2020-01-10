@@ -1,6 +1,9 @@
 <template>
   <div>
     <h3 class="mb-5">Iniciar sesión</h3>
+    <div v-if="logginErrorStatus" class="alert alert-danger">
+      {{ logginErrorStatus }}
+    </div>
     <b-form>
       <b-form-group
         id="input-group-1"
@@ -11,7 +14,8 @@
           id="input-1"
           type="email"
           required
-          placeholder="Enter email"
+          placeholder="Email"
+          v-model="login"
         ></b-form-input>
       </b-form-group>
 
@@ -21,11 +25,20 @@
           type="password"
           required
           placeholder="Contraseña"
+          v-model="password"
         ></b-form-input>
       </b-form-group>
 
       <div class="d-flex justify-content-center p-2 bd-highlight">
-        <b-button type="submit" variant="primary">Submit</b-button>
+        <b-button
+          @click="submitForm()"
+          type="button"
+          variant="primary"
+          :disabled="!formValid"
+        >
+          ¡Inciar Sesión!
+          <font-awesome-icon icon="check-circle" />
+        </b-button>
       </div>
     </b-form>
   </div>
@@ -33,8 +46,39 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapActions, mapState } from 'vuex';
+import { LoginModel } from '../models/login.models';
 
-export default Vue.extend({});
+export default Vue.extend({
+  name: 'LoginForm',
+  data() {
+    return {
+      login: '',
+      loginInputErrMsg: '',
+      password: '',
+      passwordInputErrMsg: '',
+    };
+  },
+  methods: {
+    ...mapActions(['updateLoginStatusAction']),
+    async submitForm(): Promise<any> {
+      if (!this.formValid) {
+        return;
+      }
+      await this.updateLoginStatusAction({
+        login: this.login,
+        password: this.password,
+      });
+      this.$router.push({ name: 'about' });
+    },
+  },
+  computed: {
+    ...mapState(['logginErrorStatus']),
+    formValid(): boolean {
+      return this.login && this.password ? true : false;
+    },
+  },
+});
 </script>
 
 <style scoped></style>
