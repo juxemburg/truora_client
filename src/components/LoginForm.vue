@@ -69,7 +69,7 @@ export default Vue.extend({
         login: this.login,
         password: this.password,
       });
-      this.$router.push({ name: 'about' });
+      this.$router.push({ name: 'serverList' });
     },
   },
   computed: {
