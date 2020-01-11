@@ -21,6 +21,15 @@ const routes = [
             /* webpackChunkName: "dashboard" */ '../views/dashboard/ServerSearch.vue'
           ),
       },
+      {
+        path: '/domainInfo/:uri',
+        name: 'domainInfo',
+        props: (r: any) => ({ uri: `${r.params.uri}` }),
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard" */ '../views/dashboard/DomainInfo.vue'
+          ),
+      },
     ],
   },
   {

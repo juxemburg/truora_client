@@ -5,16 +5,19 @@
   >
     <div class="grid-layout__navbar">
       <b-navbar type="dark" variant="primary">
-        <b-navbar-brand href="#"
-          >coso de servidores (nombre provisional)</b-navbar-brand
-        >
+        <b-navbar-brand href="#">
+          Búsqueda de dominios
+        </b-navbar-brand>
         <b-navbar-nav class="ml-auto">
-          <b-nav-text>¡Bienvenido!</b-nav-text>
+          <router-link class="nav-link" :to="{ name: 'serverList' }">
+            Buscar dominios
+          </router-link>
           <b-button
             class="ml-2"
             size="xs"
             variant="outline-light"
             type="submit"
+            @click="logout()"
           >
             Cerrar sesión
             <font-awesome-icon icon="sign-out-alt" />
@@ -32,8 +35,19 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapActions } from 'vuex';
 
-export default Vue.extend({});
+export default Vue.extend({
+  name: 'dashboard',
+  methods: {
+    ...mapActions(['logoutAction']),
+    async logout() {
+      await this.logoutAction();
+      this.$router.push({ name: 'login' });
+    },
+  },
+  computed: {},
+});
 </script>
 
 <style lang="scss" scoped>

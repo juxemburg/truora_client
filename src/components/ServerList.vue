@@ -8,7 +8,15 @@
       <LoadingSpinner />
     </div>
     <b-row>
-      <b-col v-for="search in recentSearches" :key="search.hostID">
+      <b-col
+        cols="12"
+        sm="12"
+        md="6"
+        lg="4"
+        class="my-2"
+        v-for="search in recentSearches"
+        :key="search.hostID"
+      >
         <ServerListItem :item="search" />
       </b-col>
     </b-row>

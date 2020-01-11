@@ -1,15 +1,17 @@
 <template>
   <b-card>
-    <h3 class="card-title">
+    <h4 class="card-title">
       <img width="16px" :src="item.logoURL" />
-      <a href="#">
+      <router-link :to="{ name: 'domainInfo', params: { uri: item.hostID } }">
         {{ item.hostID }}
-      </a>
-    </h3>
-    <h6 class="card-subtitletext-muted">{{ item.pageTitle }}</h6>
-    <p class="text-muted">
-      <small> {{ item.lastVisited | timeAgo }}</small>
-    </p>
+      </router-link>
+    </h4>
+    <div class="px-4">
+      <h6 class="card-subtitletext-muted">{{ item.pageTitle }}</h6>
+      <p class="text-muted mb-0">
+        <small> {{ item.lastVisited | timeAgo }}</small>
+      </p>
+    </div>
   </b-card>
 </template>
 

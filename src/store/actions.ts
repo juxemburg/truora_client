@@ -22,6 +22,9 @@ export const actions = {
       errMsg => commit(UPDATE_LOGIN_ERRMSG, errMsg)
     );
   },
+  logoutAction({ commit }: ActionContext<AppState, AppState>) {
+    commit(UPDATE_LOGIN_STATUS, false);
+  },
   retrieveRecentSearchesAction({ commit }: ActionContext<AppState, AppState>) {
     commit(SET_LOADING_SEARCH_LIST, true);
     searchService.getRecentSearches().subscribe(
