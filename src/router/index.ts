@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Login from '../views/Login.vue';
+import { authGuardFn } from './route-guards';
 
 Vue.use(VueRouter);
 
@@ -8,6 +9,7 @@ const routes = [
   {
     path: '/',
     name: 'dashboard',
+    beforeEnter: authGuardFn,
     component: () =>
       import(
         /* webpackChunkName: "dashboard" */ '../views/dashboard/Index.vue'
@@ -36,12 +38,6 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login,
-  },
-  {
-    path: '/about',
-    name: 'about',
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
 ];
 
