@@ -1,28 +1,48 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Login from '../views/Login.vue';
+import { authGuardFn } from './route-guards';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "home",
-    component: Home
+    path: '/',
+    name: 'dashboard',
+    beforeEnter: authGuardFn,
+    component: () =>
+      import(
+        /* webpackChunkName: "dashboard" */ '../views/dashboard/Index.vue'
+      ),
+    children: [
+      {
+        path: '/',
+        name: 'serverList',
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard" */ '../views/dashboard/ServerSearch.vue'
+          ),
+      },
+      {
+        path: '/domainInfo/:uri',
+        name: 'domainInfo',
+        props: (r: any) => ({ uri: `${r.params.uri}` }),
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard" */ '../views/dashboard/DomainInfo.vue'
+          ),
+      },
+    ],
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
-  }
+    path: '/login',
+    name: 'login',
+    component: Login,
+  },
 ];
 
 const router = new VueRouter({
-  routes
+  routes,
 });
 
 export default router;
